@@ -6,5 +6,7 @@ public interface IServicioGenero extends IServicio<Genero,Integer> {
 
 	Genero buscaGenero(Integer idGenero);
 
+	Genero buscarPorNombre(String tipoDeGenero);
+
 
 }

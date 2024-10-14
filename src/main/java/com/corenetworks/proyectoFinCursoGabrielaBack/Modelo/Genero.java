@@ -22,7 +22,7 @@ public class Genero {
     private int idGenero;
 
 //    @Column(length = 60, nullable = false, unique = true)
-    @Column(length = 60, nullable = false)
+    @Column(length = 60, nullable = false, unique = true)
     private String tipoGenero;
 
 

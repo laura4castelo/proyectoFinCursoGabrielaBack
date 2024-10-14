@@ -15,5 +15,9 @@ public interface IServicioCancion extends IServicio<Cancion,Integer> {
 
 	List<Cancion> findByGenero(Genero genero);
 
+	List<Cancion> BuscarLas5MasDescargadas();
+
+	List<Cancion> BuscarLas5MasNuevas();
+
 
 }

@@ -47,15 +47,14 @@ public class ControladorCancion {
 		return new ResponseEntity<>(convertirADto(cancion), HttpStatus.OK);
    }
 
-//    // una misma canción puede tener versiones distintas interpretadas por intérpretes (o directores) distintos (p. ej: en música clásica)
-//    // Por tanto, al buscar por nombre, pueden aparecer más de 1
-//	@GetMapping("{nombreCancion}")
-//    public ResponseEntity<List<DtoCancion>> consultarUnaCancion(@PathVariable("nombreCancion") String nombreCancion) throws Exception{
-//		
-//		List<Cancion> cancionList = iServicioCancion.buscaPorNombre(nombreCancion);
-//		HttpStatus estado = cancionList.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;		
-//        return new ResponseEntity<>(convertirAListDto(cancionList), estado);
-//    }
+    // una misma canción puede tener versiones distintas interpretadas por intérpretes (o directores) distintos (p. ej: en música clásica)
+    // Por tanto, al buscar por nombre, pueden aparecer más de 1
+	@GetMapping("nombre/{nombreCancion}")
+    public ResponseEntity<List<DtoCancion>> consultarUnaCancion(@PathVariable("nombreCancion") String nombreCancion) throws Exception{
+		List<Cancion> cancionList = iServicioCancion.buscaPorNombre(nombreCancion);
+		HttpStatus estado = cancionList.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return new ResponseEntity<>(convertirAListDto(cancionList), estado);
+    }
 //
 
     @GetMapping("genero/{idGenero}")
@@ -69,6 +68,39 @@ public class ControladorCancion {
             return new ResponseEntity<>(convertirAListDto(cancionesList), HttpStatus.OK);
         }
     }
+
+
+	@GetMapping("genero/nombre/{nombreGenero}")
+    public ResponseEntity<List<DtoCancion>> consultaCancionesPorGenero(@PathVariable("nombreGenero")String nombreGenero){
+       //Obtengo genero por nombre y compruebo que exista
+
+        Genero genero= iServicioGenero.buscarPorNombre(nombreGenero);
+		
+        if (genero==null){
+            throw new ExceptionNoEncontradoModelo(nombreGenero+" no ha sido encontrado");
+           // return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
+        }
+        //Genero existe
+        else {
+            List<DtoCancion> canciones_dto=genero.getCanciones()
+                    .stream()
+                    .map(x->mapper.map(x,DtoCancion.class))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(canciones_dto,HttpStatus.OK);
+        }
+    }
+
+	@GetMapping("masdescargadas")
+	public ResponseEntity<List<DtoCancion>> consultaCancionesMasDescargadas(){
+		List<Cancion> cancionesList = iServicioCancion.BuscarLas5MasDescargadas();
+		return new ResponseEntity<>(convertirAListDto(cancionesList), HttpStatus.OK);
+	}
+	@GetMapping("masnuevas")
+	public ResponseEntity<List<DtoCancion>> consultaCancionesMasNuevas(){
+		List<Cancion> cancionesList = iServicioCancion.BuscarLas5MasNuevas();
+		return new ResponseEntity<>(convertirAListDto(cancionesList), HttpStatus.OK);
+	}
+
 
 	@PostMapping
 	public ResponseEntity<DtoCancion> insertar(@Validated @RequestBody DtoCancion dtoCancion) throws Exception {

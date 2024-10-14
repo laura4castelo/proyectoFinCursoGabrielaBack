@@ -24,7 +24,7 @@ public class Cancion  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCancion;
 
-    @Column(length = 120, nullable = false)
+    @Column(length = 120, nullable = false, unique = true)
     private String nombre;
     @Column(nullable = false)
     private LocalDate fechaCreacion;

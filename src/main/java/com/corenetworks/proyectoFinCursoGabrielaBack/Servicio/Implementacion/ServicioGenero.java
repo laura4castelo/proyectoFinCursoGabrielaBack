@@ -27,4 +27,9 @@ public class ServicioGenero extends ServicioImpl<Genero,Integer> implements ISer
 	public Genero buscaGenero(Integer idGenero) {
 		return iCrudGeneroRepositorio.findById(idGenero).orElse(null);
 	}
+
+    @Override
+    public Genero buscarPorNombre(String tipoDeGenero) {
+        return iCrudGeneroRepositorio.findByTipoGenero(tipoDeGenero);
+    }
 }

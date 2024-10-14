@@ -8,7 +8,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IRepositoryCancion extends IRepository<Cancion, Integer> {
+
     List<Cancion> findByNombre(String nombre);
+
+    List<Cancion> findFirst5ByOrderByDescargasDesc();
+
+    List<Cancion> findFist5ByOrderByIdCancionDesc();
 
     @Query(value = "SELECT * FROM canciones WHERE id_genero = :name",nativeQuery = true)
     List<Cancion> findByIdGeneroNative(@Param("name") int idGenero);

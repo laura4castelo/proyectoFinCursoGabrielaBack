@@ -21,7 +21,7 @@ public class Interprete {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idInterprete;
 
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false, length = 120, unique = true)
     private String nombre;
     @Column(nullable = false)
     private Date fechaCreacion;

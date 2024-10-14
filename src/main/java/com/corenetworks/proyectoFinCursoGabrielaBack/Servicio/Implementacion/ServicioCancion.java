@@ -70,10 +70,21 @@ public class ServicioCancion extends ServicioImpl<Cancion,Integer> implements IS
 
 	@Override
 	public List<Cancion> findByGenero(Genero genero) {
-		return iCrudCancionRepositorio.findByGenero(genero.getIdGenero());
+
+        return iCrudCancionRepositorio.findByGenero(genero.getIdGenero());
 	}
 
-	@Override
+    @Override
+    public List<Cancion> BuscarLas5MasDescargadas() {
+        return iCrudCancionRepositorio.findFirst5ByOrderByDescargasDesc();
+    }
+
+    @Override
+    public List<Cancion> BuscarLas5MasNuevas() {
+        return iCrudCancionRepositorio.findFist5ByOrderByIdCancionDesc();
+    }
+
+    @Override
 	public void borrarCancionPorId(Integer id) {
 		iCrudCancionRepositorio.deleteByIdCancion(id);
 		

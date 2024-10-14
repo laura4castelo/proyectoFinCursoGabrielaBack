@@ -39,6 +39,11 @@ public class ControladorGenero {
 		}		
 		return new ResponseEntity<>(convertirADto(genero), HttpStatus.OK);
    }
+	@GetMapping("nombre/{nombre}")
+	public ResponseEntity<DtoGenero> getGeneroPorNombre(@PathVariable("nombre") String nombreGenero){
+		Genero genero=iServicioGenero.buscarPorNombre(nombreGenero);
+		return new ResponseEntity<>(mapper.map(genero, DtoGenero.class),HttpStatus.OK);
+	}
 	
     @PostMapping
     public ResponseEntity<DtoGenero> insertar(@Validated @RequestBody DtoGenero dtoGenero) throws Exception{
